@@ -47,7 +47,7 @@ public class BusinessServiceImpl implements BusinessService {
 	@DS(DataSourceName.SLAVE)
 	public void queryAllCourse() {
 		List<DCourse> dCourses = dCourseDAO.listHotCourse();
-		log.info("课程数据:" + JSON.toJSONString(dCourses));
+		log.info("课程数据...:" + JSON.toJSONString(dCourses));
 	}
 
 	/**
