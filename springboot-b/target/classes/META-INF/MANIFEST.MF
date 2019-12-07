@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: springboot-b
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: 82796
+Implementation-Vendor-Id: com.xiehui
+Build-Jdk: 1.8.0_121
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/springboot-b
+Created-By: Maven Integration for Eclipse
+
