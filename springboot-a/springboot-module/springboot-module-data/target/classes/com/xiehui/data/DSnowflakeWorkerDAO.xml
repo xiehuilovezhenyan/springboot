@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 雪花工作者映射 -->
+<mapper namespace="com.xiehui.data.DSnowflakeWorkerDAO">
+
+    <!-- 创建雪花工作者语句 -->
+    <insert id="create">
+        insert into t_snowflake_worker
+        ( id
+        , module_name
+        , host_address
+        , created_time
+        ) values
+        ( #{create.id}
+        ,
+        #{create.moduleName}
+        , #{create.hostAddress}
+        <choose>
+            <when test="create.createdTime != null">
+                , #{create.createdTime}
+            </when>
+            <otherwise>
+                , current_timestamp
+            </otherwise>
+        </choose>
+        )
+    </insert>
+
+    <!-- 获取我的工作者标识语句 -->
+    <select id="getMyWorkerId" resultType="java.lang.Long">
+		select id
+		from t_snowflake_worker
+		where module_name = #{moduleName}
+		and host_address = #{hostAddress}
+	</select>
+
+</mapper>

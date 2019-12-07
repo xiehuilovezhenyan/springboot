@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 课程映射 -->
+<mapper namespace="com.xiehui.data.DCourseDAO">
+
+	<!-- 所有字段语句 -->
+	<sql id="fields">
+		id
+		, name
+		, version_nike_name
+		, small_logo
+		, big_logo
+		, banner
+		, before_notice_pic
+		, summary
+		, type
+		, special
+		, tags
+		, is_hot
+		, status
+		, update_status
+		, invalid_date
+		, marked_price
+		, price
+		, discount_price
+		, people_group
+		, characters
+		, detail_pic
+		, is_audition
+		, is_open_pay
+		, exam_id
+		, is_join_group
+		, guide_title
+		, guide_desc
+		, remark
+		, order_number
+		, is_deleted
+		, created_time
+		, modified_time
+        , media_type
+	</sql>
+
+	<!-- 获取课程语句 -->
+	<select id="get" resultType="com.xiehui.data.DCourse">
+		select
+		<include refid="fields"/>
+		from t_course
+		where id = #{id}
+	</select>
+
+	<!-- 存在课程语句 -->
+	<select id="exist" resultType="java.lang.Boolean">
+		select count(*)
+		from t_course
+		where id = #{id}
+		and is_deleted = 0
+	</select>
+    <select id="selectShoppingCourseByCustomerId" resultType="com.xiehui.data.DCourse">
+        SELECT
+          tc.id
+		, tc.name
+		, tc.version_nike_name
+		, tc.small_logo
+		, tc.big_logo
+		, tc.banner
+		, tc.before_notice_pic
+		, tc.summary
+		, tc.type
+		, tc.special
+		, tc.tags
+		, tc.is_hot
+		, tc.status
+		, tc.update_status
+		, tc.invalid_date
+		, tc.marked_price
+		, o.price_amount as price
+		, o.pay_amount as discount_price
+		, tc.people_group
+		, tc.characters
+		, tc.detail_pic
+		, tc.is_audition
+		, tc.is_open_pay
+		, tc.exam_id
+		, tc.is_join_group
+		, tc.guide_title
+		, tc.guide_desc
+		, tc.remark
+		, tc.order_number
+		, tc.is_deleted
+		, tc.created_time
+		, tc.modified_time
+        , tc.media_type
+        FROM
+             t_order o,
+             t_course tc
+        WHERE
+                o.`status` = 2
+          AND o.course_id = tc.id
+          AND tc.type != 5
+          AND o.customer_id = #{customerId}
+          AND o.is_deleted = 0
+          AND ( CASE IFNULL( o.invalid_date, 1 ) WHEN 1 THEN 1 ELSE o.invalid_date >= NOW( ) END ) = 1
+        ORDER BY
+                 o.created_time DESC;
+
+    </select>
+
+    <select id="listHomeCourseByParameter" resultType="com.xiehui.data.DCourse">
+        select
+        <include refid="fields"/>
+        from t_course
+        where is_deleted = 0
+        and status = 0
+        and type=#{type}
+        order by order_number asc
+    </select>
+    <select id="listHotCourse" resultType="com.xiehui.data.DCourse">
+        select
+        <include refid="fields"/>
+        from t_course
+        where is_deleted = 0
+        and status = 0
+        and is_hot=1
+        order by order_number asc
+    </select>
+    <select id="listCourseByPrimaryKeyIds" resultType="com.xiehui.data.DCourse">
+        SELECT
+            <include refid="fields"/>
+        FROM
+            t_course
+        WHERE
+            is_deleted = 0
+            AND `status` = 0
+            AND id IN
+        <foreach collection="ids" index="index" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+	<!--不需要引导加群的课-->
+    <select id="selectAllSimpleCourse" resultType="com.xiehui.data.DCourse">
+		select * from t_course where is_join_group = 0 and status = 0 and is_deleted = 0 and type != 5
+	</select>
+    <select id="selectVirtualProduct" resultType="com.xiehui.data.DCourse">
+        SELECT
+                <include refid="fields"/>
+        FROM
+             t_course
+        WHERE
+                is_deleted = 0
+          AND STATUS = 0
+          AND type = 5
+    </select>
+
+	<select id="listCourseIdByParameter" resultType="java.lang.Long">
+		select
+		id
+		from t_course
+		where is_deleted = 0
+		and status = 0
+		and type=#{type}
+		order by order_number asc
+	</select>
+
+    <select id="groupConcatCourseNameByIds" resultType="java.lang.String">
+        SELECT
+            GROUP_CONCAT(`name`)
+        FROM
+            t_course
+        WHERE
+            is_deleted = 0
+            AND `status` = 0
+            AND id in
+        <foreach collection="ids" item="one" open="(" close=")" separator="," >
+            #{one}
+        </foreach>
+    </select>
+	<!-- 根据版本昵称查询课程列表 -->
+	<select id="selectCourseByVersionNikeName"
+			resultType="com.xiehui.data.DCourse">
+		SELECT <include refid="fields"/>
+		from t_course
+		where status = 0 and is_deleted = 0 and version_nike_name = #{versionNikeName}
+	</select>
+	<select id="listCourseByCampDateIds"
+			resultType="com.xiehui.data.DCourse">
+		SELECT c.id,c.name
+		FROM t_course c LEFT join t_course_camp_date d on c.id=d.course_id
+		 where
+		c.status = 0 and c.is_deleted = 0
+		and d.camp_date_id in
+		<foreach collection="campDateIds" item="id" open="(" close=")" separator="," >
+			#{id}
+		</foreach>
+	</select>
+
+	<!-- 创建课程语句 -->
+	<insert id="create">
+		insert into t_course
+		( id
+		, name
+		, small_logo
+		, big_logo
+		, banner
+		, before_notice_pic
+		, summary
+		, type
+		, special
+		, tags
+		, is_hot
+		, status
+		, update_status
+		, invalid_date
+		, marked_price
+		, price
+		, discount_price
+		, people_group
+		, characters
+		, detail_pic
+		, is_audition
+		, is_open_pay
+		, exam_id
+		, is_join_group
+		, guide_title
+		, guide_desc
+		, remark
+		, order_number
+		, is_deleted
+		, created_time
+        , media_type
+		) values
+		( #{create.id}
+		, #{create.name}
+		, #{create.smallLogo}
+		, #{create.bigLogo}
+		, #{create.banner}
+		, #{create.beforeNoticePic}
+		, #{create.summary}
+		, #{create.type}
+		, #{create.special}
+		, #{create.tags}
+		, #{create.isHot}
+		, #{create.status}
+		, #{create.updateStatus}
+		, #{create.invalidDate}
+		, #{create.markedPrice}
+		, #{create.price}
+		, #{create.discountPrice}
+		, #{create.peopleGroup}
+		, #{create.characters}
+		, #{create.detailPic}
+		, #{create.isAudition}
+		, #{create.isOpenPay}
+		, #{create.examId}
+		, #{create.isJoinGroup}
+		, #{create.guideTitle}
+		, #{create.guideDesc}
+		, #{create.remark}
+		, #{create.orderNumber}
+		, #{create.isDeleted}
+		<choose>
+			<when test="create.createdTime != null">
+				, #{create.createdTime}
+			</when>
+			<otherwise>
+				, current_timestamp
+			</otherwise>
+		</choose>
+		)
+        , #{create.mediaType}
+	</insert>
+
+	<!-- 修改课程语句 -->
+	<update id="modify">
+		update t_course
+		<choose>
+			<when test="modify.modifiedTime != null">
+				set modified_time = #{modify.modifiedTime}
+			</when>
+			<otherwise>
+				set modified_time = current_timestamp
+			</otherwise>
+		</choose>
+		<if test="modify.name != null">
+			, name = #{modify.name}
+		</if>
+		<if test="modify.smallLogo != null">
+			, small_logo = #{modify.smallLogo}
+		</if>
+		<if test="modify.bigLogo != null">
+			, big_logo = #{modify.bigLogo}
+		</if>
+		<if test="modify.banner != null">
+			, banner = #{modify.banner}
+		</if>
+		<if test="modify.beforeNoticePic != null">
+			, before_notice_pic = #{modify.beforeNoticePic}
+		</if>
+		<if test="modify.summary != null">
+			, summary = #{modify.summary}
+		</if>
+		<if test="modify.type != null">
+			, type = #{modify.type}
+		</if>
+		<if test="modify.special != null">
+			, special = #{modify.special}
+		</if>
+		<if test="modify.tags != null">
+			, tags = #{modify.tags}
+		</if>
+		<if test="modify.isHot != null">
+			, is_hot = #{modify.isHot}
+		</if>
+		<if test="modify.status != null">
+			, status = #{modify.status}
+		</if>
+		<if test="modify.updateStatus != null">
+			, update_status = #{modify.updateStatus}
+		</if>
+		<if test="modify.invalidDate != null">
+			, invalid_date = #{modify.invalidDate}
+		</if>
+		<if test="modify.markedPrice != null">
+			, marked_price = #{modify.markedPrice}
+		</if>
+		<if test="modify.price != null">
+			, price = #{modify.price}
+		</if>
+		<if test="modify.discountPrice != null">
+			, discount_price = #{modify.discountPrice}
+		</if>
+		<if test="modify.peopleGroup != null">
+			, people_group = #{modify.peopleGroup}
+		</if>
+		<if test="modify.characters != null">
+			, characters = #{modify.characters}
+		</if>
+		<if test="modify.detailPic != null">
+			, detail_pic = #{modify.detailPic}
+		</if>
+		<if test="modify.isAudition != null">
+			, is_audition = #{modify.isAudition}
+		</if>
+		<if test="modify.isOpenPay != null">
+			, is_open_pay = #{modify.isOpenPay}
+		</if>
+		<if test="modify.examId != null">
+			, exam_id = #{modify.examId}
+		</if>
+		<if test="modify.isJoinGroup != null">
+			, is_join_group = #{modify.isJoinGroup}
+		</if>
+		<if test="modify.guideTitle != null">
+			, guide_title = #{modify.guideTitle}
+		</if>
+		<if test="modify.guideDesc != null">
+			, guide_desc = #{modify.guideDesc}
+		</if>
+		<if test="modify.remark != null">
+			, remark = #{modify.remark}
+		</if>
+		<if test="modify.orderNumber != null">
+			, order_number = #{modify.orderNumber}
+		</if>
+		<if test="modify.isDeleted != null">
+			, is_deleted = #{modify.isDeleted}
+		</if>
+		where id = #{modify.id}
+	</update>
+
+</mapper>
