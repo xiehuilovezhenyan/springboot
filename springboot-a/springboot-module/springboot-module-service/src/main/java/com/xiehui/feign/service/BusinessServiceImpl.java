@@ -90,7 +90,7 @@ public class BusinessServiceImpl implements BusinessService {
 	
 	@Override
 	public void testRedisssionSync() {
-		for(int i=0;i<1000;i++) {
+		for(int i=0;i<10000;i++) {
 			taskExecutor.execute(new Runnable() {
 				
 				@Override
@@ -101,7 +101,7 @@ public class BusinessServiceImpl implements BusinessService {
 			});
 		}
 		
-		for(int i=0;i<1000;i++) {
+		for(int i=0;i<10000;i++) {
 			taskExecutor.execute(new Runnable() {
 				
 				@Override
