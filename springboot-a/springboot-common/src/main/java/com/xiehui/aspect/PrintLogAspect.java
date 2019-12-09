@@ -43,6 +43,8 @@ public class PrintLogAspect {
 			String header = headerNames.nextElement();
 			headerMap.put(header, request.getHeader(header));
 		} while (headerNames.hasMoreElements());
+		
+		//打印请求数据
 		log.info(
 				"\n" + "请求地址  >>>  {}\n" + "请求方法  >>>  {}\n" + "请求参数  >>>  {}\n" + "请求来源  >>>  {}\n" + "内容类型  >>>  {}\n"
 						+ "用户标识  >>>  {}\n" + "用户名称  >>>  {}\n" + "请求头部  >>>  {}\n",
@@ -53,6 +55,7 @@ public class PrintLogAspect {
 		// 执行方法
 		Object result = point.proceed();
 
+		//打印返回数据
 		log.info("返回数据:\n{}", JSON.toJSONString(result, SerializerFeature.WriteMapNullValue));
 		return result;
 	}
