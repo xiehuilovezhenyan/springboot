@@ -21,6 +21,12 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * 打印所有请求日志
+ * 
+ * @author xiehui
+ *
+ */
 @Slf4j
 @Aspect
 @Component
@@ -39,23 +45,35 @@ public class PrintLogAspect {
 		HttpServletRequest request = sra.getRequest();
 		Enumeration<String> headerNames = request.getHeaderNames();
 		Map<String, Object> headerMap = new HashMap<>(10);
+
+		// 请求参数
+		String params = null;
+		try {
+			if (args.length != 0) {
+				params = JSON.toJSONString(args[0]);
+			}
+		} catch (Exception e) {
+			log.error("请求参数转化问题" + JSON.toJSONString(args[0]));
+		}
+
+		// 头部信息
 		do {
 			String header = headerNames.nextElement();
 			headerMap.put(header, request.getHeader(header));
 		} while (headerNames.hasMoreElements());
-		
-		//打印请求数据
+
+		// 打印请求数据
 		log.info(
 				"\n" + "请求地址  >>>  {}\n" + "请求方法  >>>  {}\n" + "请求参数  >>>  {}\n" + "请求来源  >>>  {}\n" + "内容类型  >>>  {}\n"
 						+ "用户标识  >>>  {}\n" + "用户名称  >>>  {}\n" + "请求头部  >>>  {}\n",
-				request.getRequestURI(), request.getMethod(), StringUtils.join(args, ";"), request.getRemoteAddr(),
-				request.getContentType(), (Long) request.getSession().getAttribute("adminId"),
+				request.getRequestURI(), request.getMethod(), params, request.getRemoteAddr(), request.getContentType(),
+				(Long) request.getSession().getAttribute("adminId"),
 				(String) request.getSession().getAttribute("adminName"), JSON.toJSONString(headerMap));
 
 		// 执行方法
 		Object result = point.proceed();
 
-		//打印返回数据
+		// 打印返回数据
 		log.info("返回数据:\n{}", JSON.toJSONString(result, SerializerFeature.WriteMapNullValue));
 		return result;
 	}
