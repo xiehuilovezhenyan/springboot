@@ -26,7 +26,6 @@ import com.dianfeng.mp.tools.encryption.DesUtil;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Component
 @Intercepts({@Signature(type = Executor.class, method = "query",
     args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class})})
 public class ResultInterceptor implements Interceptor {

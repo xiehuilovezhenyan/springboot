@@ -34,7 +34,6 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @Slf4j
-@Component
 @Intercepts({ @Signature(type = ParameterHandler.class, method = "setParameters", args = { PreparedStatement.class }) })
 public class ParameterInterceptor implements Interceptor {
 	private static String[] STR_TAB_ARR = null;
