@@ -6,6 +6,9 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.xiehui.plugin.shard.ShardTablePlugin;
+import com.xiehui.plugin.shard.ShardTableStrategy;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -15,8 +18,12 @@ public class MyBatisInterceptorConfig {
 	@Bean
 	public String mybatisInterceptor(SqlSessionFactory sqlSessionFactory) {
 		// 拦截器
+		// 入参拦截器
 		ParameterInterceptor parameterInterceptor = new ParameterInterceptor();
+		// 出参拦截器
 		ResultInterceptor resultInterceptor = new ResultInterceptor();
+		// 分表拦截器
+		ShardTablePlugin shardTablePlugin = new ShardTablePlugin();
 
 		// 入参
 		Properties properties = new Properties();
@@ -31,12 +38,12 @@ public class MyBatisInterceptorConfig {
 		// 添加拦截器
 		sqlSessionFactory.getConfiguration().addInterceptor(parameterInterceptor);
 		sqlSessionFactory.getConfiguration().addInterceptor(resultInterceptor);
-		
-		log.info("一共初始化{}个mybatis拦截器",sqlSessionFactory.getConfiguration().getInterceptors().size());
-		
+		sqlSessionFactory.getConfiguration().addInterceptor(shardTablePlugin);
+
+		log.info("一共初始化{}个mybatis拦截器", sqlSessionFactory.getConfiguration().getInterceptors().size());
+
 		// 返回
 		return "interceptor";
-		
 
 	}
 

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 客户账户交易映射 -->
+<mapper namespace="com.xiehui.data.DCustomerAccountTransactionDAO">
+
+	<!-- 所有字段语句 -->
+	<sql id="fields">
+		id
+		, customer_id
+		, source_customer_id
+		, amount
+		, balance
+		, `type`
+		, sub_type
+		, description
+		, status
+		, settle_status
+		, source_biz_id
+		, created_time
+		, modified_time
+	</sql>
+
+	<!-- 获取客户账户交易语句 -->
+	<select id="get" resultType="com.xiehui.data.DCustomerAccountTransaction">
+		select
+		<include refid="fields"/>
+		from t_customer_account_transaction
+		where id = #{id}
+	</select>
+
+    <!-- 创建客户账户交易语句 -->
+	<insert id="create">
+		insert into t_customer_account_transaction
+		( id
+		, customer_id
+		, source_customer_id
+		, amount
+		, balance
+		, type
+		, sub_type
+		, description
+		, status
+		, settle_status
+		, source_biz_id
+		, created_time
+		) values
+		( #{create.id}
+		, #{create.customerId}
+		, #{create.sourceCustomerId}
+		, #{create.amount}
+		, #{create.balance}
+		, #{create.type}
+		, #{create.subType}
+		, #{create.description}
+		, #{create.status}
+		, #{create.settleStatus}
+		, #{create.sourceBizId}
+		<choose>
+			<when test="create.createdTime != null">
+				, #{create.createdTime}
+			</when>
+			<otherwise>
+				, current_timestamp
+			</otherwise>
+		</choose>
+		)
+	</insert>
+
+	<!-- 修改客户账户交易语句 -->
+	<update id="modify">
+		update t_customer_account_transaction
+		<choose>
+			<when test="modify.modifiedTime != null">
+				set modified_time = #{modify.modifiedTime}
+			</when>
+			<otherwise>
+				set modified_time = current_timestamp
+			</otherwise>
+		</choose>
+		<if test="modify.customerId != null">
+			, customer_id = #{modify.customerId}
+		</if>
+		<if test="modify.sourceCustomerId != null">
+			, source_customer_id = #{modify.sourceCustomerId}
+		</if>
+		<if test="modify.amount != null">
+			, amount = #{modify.amount}
+		</if>
+		<if test="modify.balance != null">
+			, balance = #{modify.balance}
+		</if>
+		<if test="modify.type != null">
+			, type = #{modify.type}
+		</if>
+		<if test="modify.subType != null">
+			, sub_type = #{modify.subType}
+		</if>
+		<if test="modify.description != null">
+			, description = #{modify.description}
+		</if>
+		<if test="modify.status != null">
+			, status = #{modify.status}
+		</if>
+		<if test="modify.settleStatus != null">
+			, settle_status = #{modify.settleStatus}
+		</if>
+		where id = #{modify.id}
+	</update>
+
+</mapper>

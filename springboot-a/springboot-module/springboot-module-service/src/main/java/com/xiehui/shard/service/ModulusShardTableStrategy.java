@@ -12,7 +12,7 @@ import lombok.Setter;
  *
  * @author xiehui
  */
-public class ModulusShardTableStrategy implements ShardTableStrategy, InitializingBean {
+public class ModulusShardTableStrategy implements ShardTableStrategy {
 
 	/**
 	 * 分表数量
@@ -26,16 +26,20 @@ public class ModulusShardTableStrategy implements ShardTableStrategy, Initializi
 	private Boolean isZeroized;
 
 	/**
-	 * 在属性设置后调用
-	 *
-	 * @throws Exception 异常信息
+	 * 配置属性
+	 * 
+	 * @param shardCount
+	 * @param isZeroized
 	 */
-	@Override
-	public void afterPropertiesSet() throws Exception {
+	public ModulusShardTableStrategy(Integer shardCount, Boolean isZeroized) {
 		// 检查属性取值
 		Assert.notNull(shardCount, "属性shardCount(分表数量)未设置");
 		Assert.isTrue(shardCount > 0, "属性shardCount(分表数量)不为正整数");
 		Assert.notNull(isZeroized, "属性isZeroized(是否补零)未设置");
+
+		// 设置属性
+		this.shardCount = shardCount;
+		this.isZeroized = isZeroized;
 	}
 
 	/**

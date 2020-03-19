@@ -4,7 +4,6 @@ import org.springframework.util.Assert;
 
 import com.xiehui.plugin.shard.ShardTableStrategy;
 
-
 /**
  * 简单分表策略类
  *

@@ -15,6 +15,8 @@ import com.xiehui.common.core.exception.CustomException;
 import com.xiehui.constant.DataSourceName;
 import com.xiehui.data.DCourse;
 import com.xiehui.data.DCourseDAO;
+import com.xiehui.data.DCustomerAccountTransaction;
+import com.xiehui.data.DCustomerAccountTransactionDAO;
 import com.xiehui.feign.api.BusinessService;
 import com.xiehui.plugin.snowflake.IdGenerator;
 import com.xiehui.redission.DelayJobService;
@@ -27,16 +29,18 @@ import lombok.extern.slf4j.Slf4j;
 public class BusinessServiceImpl implements BusinessService {
 	@Autowired
 	private DCourseDAO dCourseDAO;
+	@Autowired
+	private DCustomerAccountTransactionDAO dCustomerAccountTransactionDAO;
 
 	@Autowired
 	private IdGenerator idGenerator;
 
 	@Autowired
 	private RocketMQService rocketMQService;
-	
+
 	@Autowired
 	private TaskExecutor taskExecutor;
-	
+
 	@Autowired
 	private DelayJobService delayJobService;
 
@@ -48,6 +52,12 @@ public class BusinessServiceImpl implements BusinessService {
 	public void queryAllCourse() {
 		List<DCourse> dCourses = dCourseDAO.listHotCourse();
 		log.info("课程数据...:" + JSON.toJSONString(dCourses));
+
+		// 查询用户交易
+		DCustomerAccountTransaction dCustomerAccountTransaction = dCustomerAccountTransactionDAO
+				.get(235070127472910400L, 219491708261638310L);
+		log.info("账户数据: " + JSON.toJSONString(dCustomerAccountTransaction));
+
 	}
 
 	/**
@@ -70,29 +80,29 @@ public class BusinessServiceImpl implements BusinessService {
 			for (int i = 0; i < 20; i++) {
 				rocketMQService.sendOrderlyMsg("order-message-1", "这里是顺序消息:" + i);
 			}
-			
-			//发送异步消息
+
+			// 发送异步消息
 			try {
 				TimeUnit.SECONDS.sleep(2);
 			} catch (Exception e) {
 			}
-			
-			//发送异步消息
+
+			// 发送异步消息
 			rocketMQService.sendSyncMsg("sync-message-1", "这里异步消息");
-			
-			//发送延迟消息
+
+			// 发送延迟消息
 			rocketMQService.sendDelayMsg("sync-message-1", "这里是延迟消息", 1);
 
 		} catch (CustomException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public void testRedisssionSync() {
-		for(int i=0;i<10000;i++) {
+		for (int i = 0; i < 10000; i++) {
 			taskExecutor.execute(new Runnable() {
-				
+
 				@Override
 				public void run() {
 					Test test = new Test(idGenerator.nextId(), "Test2222222222");
@@ -100,10 +110,10 @@ public class BusinessServiceImpl implements BusinessService {
 				}
 			});
 		}
-		
-		for(int i=0;i<10000;i++) {
+
+		for (int i = 0; i < 10000; i++) {
 			taskExecutor.execute(new Runnable() {
-				
+
 				@Override
 				public void run() {
 					Test test = new Test(idGenerator.nextId(), "Test1111111111");
@@ -112,17 +122,17 @@ public class BusinessServiceImpl implements BusinessService {
 			});
 		}
 	}
-	
+
 	@Data
-	public static class Test implements Serializable{
+	public static class Test implements Serializable {
 		/**
 		 * 
 		 */
 		private static final long serialVersionUID = 8810108867237394687L;
 		private Long id;
 		private String name;
-		
-		public Test(Long i,String name) {
+
+		public Test(Long i, String name) {
 			this.id = i;
 			this.name = name;
 		}
