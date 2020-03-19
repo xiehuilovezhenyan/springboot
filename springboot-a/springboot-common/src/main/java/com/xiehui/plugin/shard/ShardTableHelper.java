@@ -74,7 +74,7 @@ public class ShardTableHelper {
         String methodName = mapperId.substring(index + 1);
 
         // 获取指定类
-        Class clazz = null;
+        Class<?> clazz = null;
         try {
             clazz = ClassUtils.getClass(className);
         } catch (ClassNotFoundException e) {

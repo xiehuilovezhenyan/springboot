@@ -23,6 +23,7 @@ import org.apache.ibatis.plugin.Plugin;
 import org.apache.ibatis.plugin.Signature;
 import org.springframework.stereotype.Component;
 
+import com.alibaba.fastjson.JSON;
 import com.dianfeng.mp.tools.encryption.DesUtil;
 
 import lombok.extern.slf4j.Slf4j;
@@ -74,9 +75,11 @@ public class ParameterInterceptor implements Interceptor {
 
 	@Override
 	public void setProperties(Properties properties) {
-		log.info("===============================================================================================");
+		log.info("获取入参拦截器参数====================================");
 		String[] tables = properties.getProperty("tables").split(",");
 		String[] colunms = properties.getProperty("colums").split(",");
+		log.info("获取入参拦截器参数====================================" + JSON.toJSONString(tables));
+		log.info("获取入参拦截器参数====================================" + JSON.toJSONString(colunms));
 		log.info("初始化tables:{},colunms:{}", tables, colunms);
 		ParameterInterceptor.STR_TAB_ARR = tables;
 		ParameterInterceptor.STR_COL_ARR = colunms;

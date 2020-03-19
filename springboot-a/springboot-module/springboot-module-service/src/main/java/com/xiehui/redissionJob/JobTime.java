@@ -29,6 +29,7 @@ public class JobTime {
 	@PostConstruct
 	public void startJobTime() {
 		RBlockingQueue blockingQueue = redissonClient.getBlockingQueue("test");
+		redissonClient.getDelayedQueue(blockingQueue);
 		new Thread(new Runnable() {
 
 			@Override

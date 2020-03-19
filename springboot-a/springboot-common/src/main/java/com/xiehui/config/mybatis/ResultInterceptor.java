@@ -21,6 +21,7 @@ import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Component;
 
+import com.alibaba.fastjson.JSON;
 import com.dianfeng.mp.tools.encryption.DesUtil;
 
 import lombok.extern.slf4j.Slf4j;
@@ -80,7 +81,9 @@ public class ResultInterceptor implements Interceptor {
     }
 
     public void setProperties(Properties properties) {
+    	log.info("获取出参拦截器=================================================");
         String[] colunms = properties.getProperty("colums").split(",");
+        log.info("获取出参拦截器=================================================" + JSON.toJSONString(colunms));
         ResultInterceptor.STR_COL_ARR = colunms;
     }
 

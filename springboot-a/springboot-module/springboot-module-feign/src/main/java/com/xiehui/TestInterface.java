@@ -2,8 +2,12 @@ package com.xiehui;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.alibaba.fastjson.JSON;
 
 /**
  * 主要定义外界接口
@@ -16,5 +20,9 @@ public interface TestInterface {
 	
 	@GetMapping("/hello")
 	public String hello(@RequestParam(name = "name") String name);
+	
+	
+	@PostMapping("/testBody")
+	public String testBody(@RequestBody BodyTest bodyTest);
 
 }

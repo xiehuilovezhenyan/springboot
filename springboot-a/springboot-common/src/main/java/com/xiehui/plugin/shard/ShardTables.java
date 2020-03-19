@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 /**
  * 分表集注解
  *
- * @author cychen
+ * @author xiehui
  */
 @Inherited
 @Documented

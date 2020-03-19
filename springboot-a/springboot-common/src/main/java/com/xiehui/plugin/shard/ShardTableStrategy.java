@@ -3,7 +3,7 @@ package com.xiehui.plugin.shard;
 /**
  * 分表策略接口
  *
- * @author cychen
+ * @author xiehui
  */
 public interface ShardTableStrategy {
 

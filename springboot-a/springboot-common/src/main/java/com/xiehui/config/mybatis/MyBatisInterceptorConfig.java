@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MyBatisInterceptorConfig {
 
 	@Bean
-	public void mybatisInterceptor(SqlSessionFactory sqlSessionFactory) {
+	public String mybatisInterceptor(SqlSessionFactory sqlSessionFactory) {
 		// 拦截器
 		ParameterInterceptor parameterInterceptor = new ParameterInterceptor();
 		ResultInterceptor resultInterceptor = new ResultInterceptor();
@@ -33,6 +33,9 @@ public class MyBatisInterceptorConfig {
 		sqlSessionFactory.getConfiguration().addInterceptor(resultInterceptor);
 		
 		log.info("一共初始化{}个mybatis拦截器",sqlSessionFactory.getConfiguration().getInterceptors().size());
+		
+		// 返回
+		return "interceptor";
 		
 
 	}

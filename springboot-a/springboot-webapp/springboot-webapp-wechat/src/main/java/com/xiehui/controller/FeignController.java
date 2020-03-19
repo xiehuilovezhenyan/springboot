@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.xiehui.common.core.annotation.Access;
 import com.xiehui.feign.api.FeignService;
 
 @RestController
@@ -16,6 +17,7 @@ public class FeignController {
 	private FeignService feignService;
 	
 	@GetMapping("/test")
+	@Access(isLogin = false, isSign = false, isTimestamp = false)
     public String test(@RequestParam String name){
         String result = feignService.test(name);
         return "Return : " + result;
