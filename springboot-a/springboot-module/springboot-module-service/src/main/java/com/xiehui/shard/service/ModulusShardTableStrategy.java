@@ -1,11 +1,8 @@
 package com.xiehui.shard.service;
 
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
 
 import com.xiehui.plugin.shard.ShardTableStrategy;
-
-import lombok.Setter;
 
 /**
  * 取模分表策略类
@@ -17,12 +14,10 @@ public class ModulusShardTableStrategy implements ShardTableStrategy {
 	/**
 	 * 分表数量
 	 */
-	@Setter
 	private Integer shardCount;
 	/**
 	 * 是否补零
 	 */
-	@Setter
 	private Boolean isZeroized;
 
 	/**

@@ -57,7 +57,7 @@ public class ShardTableHelper {
         // 获取字段值
         return ReflectionUtils.getField(field, object);
     }
-
+    
     /**
      * 获取标识方法
      *

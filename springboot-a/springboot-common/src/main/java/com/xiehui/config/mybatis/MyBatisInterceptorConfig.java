@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.xiehui.plugin.shard.ShardTablePlugin;
-import com.xiehui.plugin.shard.ShardTableStrategy;
 
 import lombok.extern.slf4j.Slf4j;
 
