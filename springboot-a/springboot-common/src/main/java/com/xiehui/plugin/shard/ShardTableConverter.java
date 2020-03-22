@@ -13,11 +13,14 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.util.Assert;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 分表转化器类
  *
  * @author xiehui
  */
+@Slf4j
 public class ShardTableConverter implements ApplicationContextAware {
 
 	/**
@@ -72,6 +75,7 @@ public class ShardTableConverter implements ApplicationContextAware {
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 		// 不建议直接设置静态变量
+		log.info("开始设置分表策略应用上下文.............................................................");
 		setStaticApplicationContext(applicationContext);
 	}
 

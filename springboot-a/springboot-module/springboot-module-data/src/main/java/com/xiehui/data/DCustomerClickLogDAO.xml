@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 客户点击日志映射 -->
+<mapper namespace="com.xiehui.data.DCustomerClickLogDAO">
+
+	<!-- 所有字段语句 -->
+	<sql id="fields">
+		id
+		, ip
+		, plate_from
+		, channel
+		, sub_channel
+		, href_id
+		, created_time
+        , customer_id
+	</sql>
+
+	<!-- 获取客户点击日志语句 -->
+	<select id="get" resultType="com.xiehui.data.DCustomerClickLog">
+		select
+		<include refid="fields"/>
+		from t_customer_click_log
+		where id = #{id}
+	</select>
+
+	<!-- 存在客户点击日志语句 -->
+	<select id="exist" resultType="java.lang.Boolean">
+		select count(*)
+		from t_customer_click_log
+		where id = #{id}
+	</select>
+
+    <select id="existOfPlatFrom" resultType="java.lang.Boolean">
+        select count(*)
+        from t_customer_click_log
+        where customer_id = #{customerId} and plate_from = #{platFrom}
+    </select>
+
+    <!-- 创建客户点击日志语句 -->
+	<insert id="create">
+		insert into t_customer_click_log
+		( id
+		, ip
+		, plate_from
+		, channel
+		, sub_channel
+		, href_id
+		, created_time
+        , customer_id
+		) values
+		( #{create.id}
+		, #{create.ip}
+		, #{create.plateFrom}
+		, #{create.channel}
+		, #{create.subChannel}
+		, #{create.hrefId}
+		<choose>
+			<when test="create.createdTime != null">
+				, #{create.createdTime}
+			</when>
+			<otherwise>
+				, current_timestamp
+			</otherwise>
+		</choose>
+        , #{create.customerId}
+		)
+	</insert>
+
+</mapper>

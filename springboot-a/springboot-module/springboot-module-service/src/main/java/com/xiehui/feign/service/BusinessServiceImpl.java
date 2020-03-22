@@ -6,7 +6,6 @@ import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.task.TaskExecutor;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
@@ -17,6 +16,8 @@ import com.xiehui.data.DCourse;
 import com.xiehui.data.DCourseDAO;
 import com.xiehui.data.DCustomerAccountTransaction;
 import com.xiehui.data.DCustomerAccountTransactionDAO;
+import com.xiehui.data.DCustomerClickLog;
+import com.xiehui.data.DCustomerClickLogDAO;
 import com.xiehui.feign.api.BusinessService;
 import com.xiehui.plugin.snowflake.IdGenerator;
 import com.xiehui.redission.DelayJobService;
@@ -31,6 +32,8 @@ public class BusinessServiceImpl implements BusinessService {
 	private DCourseDAO dCourseDAO;
 	@Autowired
 	private DCustomerAccountTransactionDAO dCustomerAccountTransactionDAO;
+	@Autowired
+	private DCustomerClickLogDAO dCustomerClickLogDAO;
 
 	@Autowired
 	private IdGenerator idGenerator;
@@ -48,7 +51,7 @@ public class BusinessServiceImpl implements BusinessService {
 	 * 测试一主,两从
 	 */
 	@Override
-	@DS(DataSourceName.SLAVE)
+	@DS(DataSourceName.MASTER)
 	public void queryAllCourse() {
 		List<DCourse> dCourses = dCourseDAO.listHotCourse();
 		log.info("课程数据...:" + JSON.toJSONString(dCourses));
@@ -57,6 +60,22 @@ public class BusinessServiceImpl implements BusinessService {
 		DCustomerAccountTransaction dCustomerAccountTransaction = dCustomerAccountTransactionDAO
 				.get(235070127472910400L, 219491708261638310L);
 		log.info("账户数据: " + JSON.toJSONString(dCustomerAccountTransaction));
+		
+		// 添加记录
+		DCustomerClickLog dCustomerClickLog = new DCustomerClickLog();
+		dCustomerClickLog.setId(idGenerator.nextId());
+		dCustomerClickLog.setChannel(1);
+		dCustomerClickLog.setSubChannel(2);
+		dCustomerClickLog.setCustomerId(123L);
+		dCustomerClickLog.setPlateFrom("123");
+		dCustomerClickLog.setIp("127.0.0.1");
+		dCustomerClickLog.setHrefId(1L);
+		dCustomerClickLogDAO.create(dCustomerClickLog);
+		log.info("创建日志成功.................................");
+		
+		// 查询
+		DCustomerClickLog logData = dCustomerClickLogDAO.get(dCustomerClickLog.getId());
+		log.info("查询日志: " + JSON.toJSONString(logData));
 
 	}
 

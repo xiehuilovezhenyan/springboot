@@ -35,8 +35,8 @@ public class MyBatisInterceptorConfig {
 		resultInterceptor.setProperties(properties);
 
 		// 添加拦截器
-		sqlSessionFactory.getConfiguration().addInterceptor(parameterInterceptor);
-		sqlSessionFactory.getConfiguration().addInterceptor(resultInterceptor);
+		// sqlSessionFactory.getConfiguration().addInterceptor(parameterInterceptor);
+		// sqlSessionFactory.getConfiguration().addInterceptor(resultInterceptor);
 		sqlSessionFactory.getConfiguration().addInterceptor(shardTablePlugin);
 
 		log.info("一共初始化{}个mybatis拦截器", sqlSessionFactory.getConfiguration().getInterceptors().size());
