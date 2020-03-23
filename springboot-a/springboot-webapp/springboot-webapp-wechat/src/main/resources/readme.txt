@@ -6,7 +6,7 @@
 3: nacos 支持注册中心以及配置中心
 4: sentinel dashboard  限流监控地址配置
 5: redis 原生redis API支持
-6: redission 分布式锁的应用  以及  延迟队列    待发现其他好用的?
+6: redission 分布式锁的应用  以及  延迟队列    不建议使用-->使用MQ代替
 7: 雪花生成器
 8: mybatis  ###支持 主从切换, 但是不支持一主多从切换, 如果要支持一主多从切换 请参考:https://blog.csdn.net/weixin_34205826/article/details/91790793
 9: 自定义分表已实现

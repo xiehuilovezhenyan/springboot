@@ -41,9 +41,9 @@ public class StartApplication {
 		}
 		
 		@PostMapping("/testBody")
-		public  String testBody(@RequestBody BodyTest bodyTest){
+		public BodyTest testBody(@RequestBody BodyTest bodyTest){
 			log.info("invoked body = " + bodyTest);
-			return "bodyTest " + JSON.toJSONString(bodyTest);
+			return bodyTest;
 		}
 	}
 

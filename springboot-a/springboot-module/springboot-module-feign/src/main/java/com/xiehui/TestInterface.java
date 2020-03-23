@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.alibaba.fastjson.JSON;
-
 /**
  * 主要定义外界接口
  * @author xiehui
@@ -23,6 +21,6 @@ public interface TestInterface {
 	
 	
 	@PostMapping("/testBody")
-	public String testBody(@RequestBody BodyTest bodyTest);
+	public BodyTest testBody(@RequestBody BodyTest bodyTest);
 
 }
