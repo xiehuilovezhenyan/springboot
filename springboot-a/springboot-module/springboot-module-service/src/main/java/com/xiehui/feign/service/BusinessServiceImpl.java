@@ -20,6 +20,7 @@ import com.xiehui.data.DCustomerClickLog;
 import com.xiehui.data.DCustomerClickLogDAO;
 import com.xiehui.feign.api.BusinessService;
 import com.xiehui.plugin.snowflake.IdGenerator;
+import com.xiehui.rabbit.BusinessMessageSender;
 import com.xiehui.redission.DelayJobService;
 
 import lombok.Data;
@@ -46,6 +47,9 @@ public class BusinessServiceImpl implements BusinessService {
 
 	@Autowired
 	private DelayJobService delayJobService;
+	
+	@Autowired
+	private BusinessMessageSender sender;
 
 	/**
 	 * 测试一主,两从
@@ -76,6 +80,10 @@ public class BusinessServiceImpl implements BusinessService {
 		// 查询
 		DCustomerClickLog logData = dCustomerClickLogDAO.get(dCustomerClickLog.getId());
 		log.info("查询日志: " + JSON.toJSONString(logData));
+		
+		
+		// 测试rabbitMQ
+		sender.sendMsg("测试啊");
 
 	}
 

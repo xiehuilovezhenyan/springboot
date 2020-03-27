@@ -12,6 +12,6 @@
 9: 自定义分表已实现
 10:ElasticJob
 11:mongdb
-12:rocketMQ   rabbitMQ???
+12:rocketMQ(吞吐量大,并发高)    rabbitMQ(利用私信队列-->任意时间的延迟队列:https://www.cnblogs.com/mfrank/p/11184929.html)
 13:logback
 14:mybatis拦截器

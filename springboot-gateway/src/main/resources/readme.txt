@@ -3,3 +3,4 @@
 
 
 1: 网关gateway  https://www.cnblogs.com/cloudxlr/p/11795040.html
+2: 测试nacos动态切换网关
