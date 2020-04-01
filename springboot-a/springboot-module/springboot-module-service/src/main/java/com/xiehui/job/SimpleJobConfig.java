@@ -46,7 +46,7 @@ public class SimpleJobConfig {
 	@Bean(initMethod = "init")
 	public JobScheduler simpleJobScheduler(final SpringBootJob simpleJob) {
 		return new SpringJobScheduler(simpleJob, regCenter,
-				getLiteJobConfiguration(simpleJob.getClass(), "0/30 * * * * ?", 1, "0=A"));
+				getLiteJobConfiguration(simpleJob.getClass(), "0 0 1 * * ?", 1, "0=A"));
 	}
 
 	private LiteJobConfiguration getLiteJobConfiguration(final Class<? extends SimpleJob> jobClass, final String cron,

@@ -13,14 +13,14 @@ import com.xiehui.feign.api.FeignService;
 @RestController
 @RequestMapping("/api/v1/feign")
 public class FeignController {
-	@Resource(name="feignService")
+	@Resource(name = "feignService")
 	private FeignService feignService;
-	
+
 	@GetMapping("/test")
 	@Access(isLogin = false, isSign = false, isTimestamp = false)
-    public String test(@RequestParam String name){
-        String result = feignService.test(name);
-        return "Return : " + result;
-    }
+	public String test(@RequestParam String name) {
+		String result = feignService.test(name);
+		return "Return : " + result;
+	}
 
 }

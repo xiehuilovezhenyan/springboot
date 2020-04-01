@@ -227,7 +227,7 @@
                 <groupId>com.dianfeng.mp.tools</groupId>
                 <artifactId>logic-expression-runner</artifactId>
                 <version>1.0.0</version>
-            </dependency>
+            </dependency>  
         
 	</dependencies>
 
