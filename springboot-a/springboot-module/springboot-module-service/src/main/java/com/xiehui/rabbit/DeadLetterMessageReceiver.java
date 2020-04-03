@@ -22,13 +22,25 @@ public class DeadLetterMessageReceiver {
 	 * @Description 延迟队列
 	 * @Date 2019-04-04 16:34:28
 	 */
+	// 监听私信消息一
 	@RabbitListener(bindings = {
 			@QueueBinding(value = @Queue(value = "direct.delay.queue"), exchange = @Exchange(value = "direct.delay.exchange"), key = {
 					"DelayKey" }) })
 	public void getDLMessage(Message message, Channel channel) throws InterruptedException, IOException {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		// 模拟执行任务
-		log.info("这是延迟队列消费：" + new String(message.getBody()) + "：" + sdf.format(new Date()));
+		log.info("这是延迟队列一消费：" + new String(message.getBody()) + "：" + sdf.format(new Date()));
+		channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+	}
+
+	// 监听私信消息二
+	@RabbitListener(bindings = {
+			@QueueBinding(value = @Queue(value = "direct.push.queue"), exchange = @Exchange(value = "direct.msgDelay.exchange"), key = {
+					"MsgKey" }) })
+	public void getDLMessage2(Message message, Channel channel) throws InterruptedException, IOException {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		// 模拟执行任务
+		log.info("这是延迟队列二消费：" + new String(message.getBody()) + "：" + sdf.format(new Date()));
 		channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
 	}
 
