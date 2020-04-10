@@ -116,6 +116,8 @@ public class MCustomermDAO extends MongoGenDAO<DCustomer> {
 
         // 查询数据
         List<DCustomer> dCustomerList = super.mongoTemplate.find(query, DCustomer.class);
+        // 计算总数
+        // long total = super.mongoTemplate.count(query, DCustomer.class);
 
         // 返回
         return dCustomerList;
