@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @EnableDiscoveryClient   //	springboot alibaba 注册扫描
 @SpringBootApplication	 //	springboot 启动类
-@EnableFeignClients		 //	解来指定这个接口所要调用的服务名称，接口中定义的各个函数使用Spring MVC的注解就可以来绑定服务提供方的REST接口
+@EnableFeignClients		 //	注解来指定这个接口所要调用的服务名称，接口中定义的各个函数使用Spring MVC的注解就可以来绑定服务提供方的REST接口
 public class StartApplication {
 	
 	public static void main(String[] args) {
