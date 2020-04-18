@@ -18,5 +18,34 @@
   
   <build>
       <finalName>springboot-module-api</finalName>
+      <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <!-- 绑定source插件到Maven的生命周期,并在生命周期后执行绑定的source的goal -->
+                <executions>
+                    <execution>
+                        <!-- 绑定source插件到Maven的生命周期 -->
+                        <phase>compile</phase>
+                        <!--在生命周期后执行绑定的source插件的goals -->
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
   </build>
+  
+  <distributionManagement>    
+  	<repository>        
+  		<id>test-releases</id>        
+  		<url>http://39.98.167.215:8081/nexus/content/repositories/releases/</url>   
+  	</repository>   
+  	<snapshotRepository>        
+  		<id>test-Snapshots</id>        
+  		<url>http://39.98.167.215:8081/nexus/content/repositories/snapshots</url>   
+  	</snapshotRepository>
+  </distributionManagement> 
+
 </project>

@@ -47,9 +47,6 @@ public class BusinessServiceImpl implements BusinessService {
 
 	@Autowired
 	private DelayJobService delayJobService;
-	
-	@Autowired
-	private BusinessMessageSender sender;
 
 	/**
 	 * 测试一主,两从
@@ -83,7 +80,7 @@ public class BusinessServiceImpl implements BusinessService {
 		
 		
 		// 测试rabbitMQ
-		sender.sendMsg("测试啊");
+		//sender.sendMsg("测试啊");
 
 	}
 

@@ -15,7 +15,7 @@ import com.rabbitmq.client.Channel;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Component
+//@Component
 public class DeadLetterMessageReceiver {
 
 	/**
@@ -23,7 +23,7 @@ public class DeadLetterMessageReceiver {
 	 * @Date 2019-04-04 16:34:28
 	 */
 	// 监听私信消息一
-	@RabbitListener(bindings = {
+	/*@RabbitListener(bindings = {
 			@QueueBinding(value = @Queue(value = "direct.delay.queue"), exchange = @Exchange(value = "direct.delay.exchange"), key = {
 					"DelayKey" }) })
 	public void getDLMessage(Message message, Channel channel) throws InterruptedException, IOException {
@@ -42,6 +42,6 @@ public class DeadLetterMessageReceiver {
 		// 模拟执行任务
 		log.info("这是延迟队列二消费：" + new String(message.getBody()) + "：" + sdf.format(new Date()));
 		channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
-	}
+	}*/
 
 }
