@@ -12,6 +12,9 @@ import com.alibaba.fastjson.JSON;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.xiehui.common.core.exception.CustomException;
 import com.xiehui.constant.DataSourceName;
+import com.xiehui.customer.api.CustomerService;
+import com.xiehui.customer.api.CustomerService2;
+import com.xiehui.customer.module.CustomerData;
 import com.xiehui.data.DCourse;
 import com.xiehui.data.DCourseDAO;
 import com.xiehui.data.DCustomerAccountTransaction;
@@ -48,6 +51,9 @@ public class BusinessServiceImpl implements BusinessService {
 	@Autowired
 	private DelayJobService delayJobService;
 
+	@Autowired
+	private CustomerService2 customerService;
+
 	/**
 	 * 测试一主,两从
 	 */
@@ -61,7 +67,7 @@ public class BusinessServiceImpl implements BusinessService {
 		DCustomerAccountTransaction dCustomerAccountTransaction = dCustomerAccountTransactionDAO
 				.get(235070127472910400L, 219491708261638310L);
 		log.info("账户数据: " + JSON.toJSONString(dCustomerAccountTransaction));
-		
+
 		// 添加记录
 		DCustomerClickLog dCustomerClickLog = new DCustomerClickLog();
 		dCustomerClickLog.setId(idGenerator.nextId());
@@ -73,14 +79,17 @@ public class BusinessServiceImpl implements BusinessService {
 		dCustomerClickLog.setHrefId(1L);
 		dCustomerClickLogDAO.create(dCustomerClickLog);
 		log.info("创建日志成功.................................");
-		
+
 		// 查询
 		DCustomerClickLog logData = dCustomerClickLogDAO.get(dCustomerClickLog.getId());
 		log.info("查询日志: " + JSON.toJSONString(logData));
-		
-		
+
 		// 测试rabbitMQ
-		//sender.sendMsg("测试啊");
+		// sender.sendMsg("测试啊");
+
+		// 测试调用feign
+		CustomerData customerData = customerService.getCustomerData(idGenerator.nextId() + "");
+		log.info("CustomerData: " + JSON.toJSONString(customerData));
 
 	}
 
