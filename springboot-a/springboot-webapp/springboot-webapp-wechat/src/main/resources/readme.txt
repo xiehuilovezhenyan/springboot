@@ -15,4 +15,9 @@
 12:rocketMQ(吞吐量大,并发高)    rabbitMQ(利用私信队列-->任意时间的延迟队列:https://www.cnblogs.com/mfrank/p/11184929.html)
 13:logback
 14:mybatis拦截器
-15:
+15: 自动打包API接口到nexus
+	1: 根pom配置distributionManagement
+	2: settings 参考settings.xml
+	3: 根目录编译-X clean install
+	4: API模块deploy(${project_loc:/springboot-module-api}      -X clean deploy)
+	5: 如何升级API接口版本 1: 配置${project_loc:springboot-a} 指向根目录  2: 执行versions:set -DnewVersion=1.0.1   然后重复上面步骤

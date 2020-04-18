@@ -3,7 +3,7 @@
   <parent>
     <groupId>com.xiehui</groupId>
     <artifactId>springboot-webapp</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
   </parent>
   <artifactId>springboot-webapp-wechat</artifactId>
   <name>springboot-webapp-wechat</name>
