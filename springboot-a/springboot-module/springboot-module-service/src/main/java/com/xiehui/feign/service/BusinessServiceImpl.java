@@ -24,7 +24,6 @@ import com.xiehui.data.DCustomerClickLog;
 import com.xiehui.data.DCustomerClickLogDAO;
 import com.xiehui.feign.api.BusinessService;
 import com.xiehui.plugin.snowflake.IdGenerator;
-import com.xiehui.rabbit.BusinessMessageSender;
 import com.xiehui.redission.DelayJobService;
 
 import lombok.Data;
