@@ -3,7 +3,7 @@ package com.xiehui.common.core.exception;
 /**
  * 异常编码枚举
  *
- * @author xiehui
+ * @author cychen
  */
 public enum ExceptionCode {
 
@@ -39,10 +39,15 @@ public enum ExceptionCode {
     NEED_BIND_WECHAT(7, "该账户没有绑定微信"),
 
     NEED_BINDBANKCARD(10, "没有绑定银行卡"),
+    LIVE_BUY_FAILED(13, "直播间购课失败"),
     /**
      * 进度查询错误
      */
     PROGRESS_QUERY_ERROR(602, "进度查询错误"),
+
+    USER_DELETE(9997, "该账号异常操作，已被删除"),
+
+    USER_DISABLE(9998, "该账号异常操作，已被禁用"),
     /**
      * 未知错误
      */
@@ -50,8 +55,7 @@ public enum ExceptionCode {
     /**
      * 任务已经执行
      */
-    TASK_HAVEUSED(0, "任务已执行"),
-
+    TASK_HAVEUSED(1001, "任务已执行"),
     /**
      * 任务已经执行
      */
@@ -64,48 +68,22 @@ public enum ExceptionCode {
      * 任务已经执行
      */
     REWARD_CONDITION_NOTENOUGH(1004, "任务没有达到领取条件"),
-    /************************************ 订单相关 ********************************/
+
+    TASK_IS_FINISHED(1005, "活动已过期"),
     /**
-     *
-     * 库存不足
+     * 重复购买
      */
-    ORDER_GOODS_STACK(2001, "库存不足"),
+    ORDER_HAD_BUY(1006, "您已购买该课程"),
     /**
-     *
-     * 限购商品
+     * 重复报名
      */
-    ORDER_LINMIT_NUMNBER(2002, "商品限购"),
+    COURSE_HAD_JOIN(1007, "重复报名"),
+    SYSTEM_ERROR_CODE(1234, "系统错误"),
     /**
-     * 产品下架
+     * 不可继续支付(用户小白营/直播课互斥)
      */
-    ORDER_GOODS_STATUS(2003, "产品已下架"),
-    /**
-     * 地址为空
-     */
-    ORDER_ASDDRESS_BLANK(2004, "地址为空"),
-    /**
-     * 订单未支付成功
-     */
-    ORDER_PAY_ISSUCCESS(2005, "订单未支付成功"),
-    /**
-     *
-     * 该用户未购买该课商品
-     */
-    ORDER_BUY_NO_GOODS(2006, "该用户未购买该课商品"),
-    /**
-     * 产品下架
-     */
-    ORDER_GOODS_NO_START(2007, "即将上线..."),
-    /**
-     * 您已购买过此课程
-     *
-     */
-    ORDER_BUY_OVER_ONE_GOODS(2008, "你已购买过此课程"),
-    /**
-     * 无法继续购买
-     *
-     */
-    ORDER_BUY_OVER_MANY_GOODS(2009, "无法继续购买"),
+    CAN_NOT_2_PAY(1008, "不可继续支付"),
+
     ;
 
     /**

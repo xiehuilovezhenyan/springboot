@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @ToString
-public class CustomResponse<T> implements Serializable {
+public class KnowledgeResponse<T> implements Serializable {
 
     /**
      * 版本标识
@@ -43,8 +43,8 @@ public class CustomResponse<T> implements Serializable {
      *
      * @return 成功应答
      */
-    public static <T> CustomResponse<T> success() {
-        CustomResponse<T> response = new CustomResponse<>();
+    public static <T> KnowledgeResponse<T> success() {
+        KnowledgeResponse<T> response = new KnowledgeResponse<>();
         response.setCode(0);
         return response;
     }
@@ -55,8 +55,8 @@ public class CustomResponse<T> implements Serializable {
      * @param data 应答数据
      * @return 成功应答
      */
-    public static <T> CustomResponse<T> success(T data) {
-        CustomResponse<T> response = new CustomResponse<>();
+    public static <T> KnowledgeResponse<T> success(T data) {
+        KnowledgeResponse<T> response = new KnowledgeResponse<>();
         response.setCode(0);
         response.setData(data);
         return response;
@@ -69,8 +69,8 @@ public class CustomResponse<T> implements Serializable {
      * @param message 应答消息
      * @return 成功应答
      */
-    public static <T> CustomResponse<T> success(T data, String message) {
-        CustomResponse<T> response = new CustomResponse<>();
+    public static <T> KnowledgeResponse<T> success(T data, String message) {
+        KnowledgeResponse<T> response = new KnowledgeResponse<>();
         response.setCode(0);
         response.setData(data);
         response.setMessage(message);
@@ -83,8 +83,8 @@ public class CustomResponse<T> implements Serializable {
      * @param message 应答消息
      * @return 成功应答
      */
-    public static <T> CustomResponse<T> DiyCodeMsg(Integer code,T data, String message) {
-        CustomResponse<T> response = new CustomResponse<>();
+    public static <T> KnowledgeResponse<T> DiyCodeMsg(Integer code,T data, String message) {
+        KnowledgeResponse<T> response = new KnowledgeResponse<>();
         response.setCode(code);
         response.setData(data);
         response.setMessage(message);
@@ -99,8 +99,8 @@ public class CustomResponse<T> implements Serializable {
      * @param exception 应答异常
      * @return 失败应答
      */
-    public static <T> CustomResponse<T> failure(Integer code, String message, String exception) {
-        CustomResponse<T> response = new CustomResponse<>();
+    public static <T> KnowledgeResponse<T> failure(Integer code, String message, String exception) {
+        KnowledgeResponse<T> response = new KnowledgeResponse<>();
         response.setCode(code);
         response.setMessage(message);
         response.setException(exception);

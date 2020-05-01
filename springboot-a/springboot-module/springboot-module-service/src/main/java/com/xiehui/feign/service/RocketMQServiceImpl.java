@@ -10,7 +10,7 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
-import com.xiehui.common.core.exception.CustomException;
+import com.xiehui.common.core.exception.KnowledgeException;
 import com.xiehui.plugin.snowflake.IdGenerator;
 
 import lombok.extern.slf4j.Slf4j;
@@ -32,10 +32,10 @@ public class RocketMQServiceImpl implements RocketMQService {
 	 * 
 	 * @param topic
 	 * @param msg
-	 * @throws CustomException
+	 * @throws KnowledgeException
 	 */
 	@Override
-	public void sendMsg(String topic, Object msg) throws CustomException {
+	public void sendMsg(String topic, Object msg) throws KnowledgeException {
 		try {
 			rocketMQTemplate.convertAndSend(topic, msg);
 			log.info(String.format("发送MQ标准消息,主题:%s,内容:%s", topic, JSON.toJSONString(msg)));
@@ -50,10 +50,10 @@ public class RocketMQServiceImpl implements RocketMQService {
 	 * @param topic
 	 * @param tag
 	 * @param msg
-	 * @throws CustomException
+	 * @throws KnowledgeException
 	 */
 	@Override
-	public void sendMsg(String topic, String tag, Object msg) throws CustomException {
+	public void sendMsg(String topic, String tag, Object msg) throws KnowledgeException {
 		try {
 			String key = String.format("%s:%s", topic, tag);
 			rocketMQTemplate.convertAndSend(key, msg);
@@ -68,10 +68,10 @@ public class RocketMQServiceImpl implements RocketMQService {
 	 * 
 	 * @param topic
 	 * @param msgg
-	 * @throws CustomException
+	 * @throws KnowledgeException
 	 */
 	@Override
-	public void sendOneWarMsg(String topic, Object msg) throws CustomException {
+	public void sendOneWarMsg(String topic, Object msg) throws KnowledgeException {
 		try {
 			rocketMQTemplate.sendOneWay(topic, MessageBuilder.withPayload(msg).build());
 			log.info(String.format("发送MQ即发即失消息,主题:%s,内容:%s", topic, JSON.toJSONString(msg)));
@@ -85,10 +85,10 @@ public class RocketMQServiceImpl implements RocketMQService {
 	 * 
 	 * @param topic
 	 * @param msg
-	 * @throws CustomException
+	 * @throws KnowledgeException
 	 */
 	@Override
-	public void sendOrderlyMsg(String topic, Object msg) throws CustomException {
+	public void sendOrderlyMsg(String topic, Object msg) throws KnowledgeException {
 		try {
 			rocketMQTemplate.syncSendOrderly(topic, msg, idGenerator.nextId() + "", TIMEOUT);
 			log.info(String.format("发送MQ顺序消息,主题:%s,内容:%s", topic, JSON.toJSONString(msg)));
@@ -102,10 +102,10 @@ public class RocketMQServiceImpl implements RocketMQService {
 	 * 
 	 * @param topic
 	 * @param msg
-	 * @throws CustomException
+	 * @throws KnowledgeException
 	 */
 	@Override
-	public void sendSyncMsg(String topic, Object msg) throws CustomException {
+	public void sendSyncMsg(String topic, Object msg) throws KnowledgeException {
 
 		rocketMQTemplate.asyncSend(topic, MessageBuilder.withPayload(msg).build(), new SendCallback() {
 
@@ -127,10 +127,10 @@ public class RocketMQServiceImpl implements RocketMQService {
 	 * 
 	 * @param topic
 	 * @param msg
-	 * @throws CustomException
+	 * @throws KnowledgeException
 	 */
 	@Override
-	public void sendDelayMsg(String topic, Object msg, Integer delayLevel) throws CustomException {
+	public void sendDelayMsg(String topic, Object msg, Integer delayLevel) throws KnowledgeException {
 		try {
 			rocketMQTemplate.syncSend(topic, MessageBuilder.withPayload(msg).build(), TIMEOUT, delayLevel);
 			log.info(String.format("发送MQ异步消息,主题:%s,内容:%s", topic, JSON.toJSONString(msg)));

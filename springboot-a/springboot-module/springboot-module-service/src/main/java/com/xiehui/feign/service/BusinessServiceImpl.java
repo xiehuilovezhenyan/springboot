@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.baomidou.dynamic.datasource.annotation.DS;
-import com.xiehui.common.core.exception.CustomException;
+import com.xiehui.common.core.exception.KnowledgeException;
 import com.xiehui.constant.DataSourceName;
 import com.xiehui.customer.api.AccountService;
 import com.xiehui.customer.api.CustomerService;
@@ -95,7 +95,6 @@ public class BusinessServiceImpl implements BusinessService {
 		log.info("CustomerData: " + JSON.toJSONString(customerData));
 		CustomerAccount customerAccount = accountService.getCustomerAccount();
 		log.info("customerAccount: " + JSON.toJSONString(customerAccount));
-
 	}
 
 	/**
@@ -131,7 +130,7 @@ public class BusinessServiceImpl implements BusinessService {
 			// 发送延迟消息
 			rocketMQService.sendDelayMsg("sync-message-1", "这里是延迟消息", 1);
 
-		} catch (CustomException e) {
+		} catch (KnowledgeException e) {
 			e.printStackTrace();
 		}
 	}

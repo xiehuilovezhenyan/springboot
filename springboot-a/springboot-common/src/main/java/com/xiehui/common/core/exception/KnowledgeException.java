@@ -5,9 +5,9 @@ package com.xiehui.common.core.exception;
  *
  * @author xiehui
  */
-public class CustomException extends Exception {
+public class KnowledgeException extends Exception {
 
-	/**
+    /**
      * 版本标识
      */
     private static final long serialVersionUID = 1L;
@@ -25,7 +25,7 @@ public class CustomException extends Exception {
     /**
      * 构造函数
      */
-    public CustomException() {
+    public KnowledgeException() {
         super();
     }
 
@@ -34,7 +34,7 @@ public class CustomException extends Exception {
      *
      * @param code 异常编码
      */
-    public CustomException(ExceptionCode code) {
+    public KnowledgeException(ExceptionCode code) {
         super();
         this.code = code;
     }
@@ -44,7 +44,7 @@ public class CustomException extends Exception {
      *
      * @param message 异常消息
      */
-    public CustomException(String message) {
+    public KnowledgeException(String message) {
         super(message);
         // this.code=ExceptionCode.PARAMETER_ERROR;
     }
@@ -55,7 +55,7 @@ public class CustomException extends Exception {
      * @param code 异常编码
      * @param message 异常消息
      */
-    public CustomException(ExceptionCode code, String message) {
+    public KnowledgeException(ExceptionCode code, String message) {
         super(message);
         this.code = code;
     }
@@ -65,7 +65,7 @@ public class CustomException extends Exception {
      *
      * @param cause 异常原因
      */
-    public CustomException(Throwable cause) {
+    public KnowledgeException(Throwable cause) {
         super(cause);
     }
 
@@ -75,7 +75,7 @@ public class CustomException extends Exception {
      * @param code 异常编码
      * @param cause 异常原因
      */
-    public CustomException(ExceptionCode code, Throwable cause) {
+    public KnowledgeException(ExceptionCode code, Throwable cause) {
         super(cause);
         this.code = code;
     }
@@ -86,7 +86,7 @@ public class CustomException extends Exception {
      * @param message 异常消息
      * @param cause 异常原因
      */
-    public CustomException(String message, Throwable cause) {
+    public KnowledgeException(String message, Throwable cause) {
         super(message, cause);
     }
 
@@ -97,12 +97,12 @@ public class CustomException extends Exception {
      * @param message 异常消息
      * @param cause 异常原因
      */
-    public CustomException(ExceptionCode code, String message, Throwable cause) {
+    public KnowledgeException(ExceptionCode code, String message, Throwable cause) {
         super(message, cause);
         this.code = code;
     }
 
-    public CustomException(ExceptionCode code, String message,Object returnData) {
+    public KnowledgeException(ExceptionCode code, String message,Object returnData) {
         super(message);
         this.code = code;
         this.returnData = returnData;
@@ -125,5 +125,6 @@ public class CustomException extends Exception {
     public Object getReturnData() {
         return returnData;
     }
+
 
 }

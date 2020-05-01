@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.xiehui.common.core.annotation.Access;
-import com.xiehui.common.core.exception.CustomException;
+import com.xiehui.common.core.exception.KnowledgeException;
 import com.xiehui.feign.api.BusinessService;
 import com.xiehui.feign.api.MongdbService;
 
@@ -32,19 +32,19 @@ public class BusinessController {
 
 	@GetMapping("/testMongdb")
 	@Access(isLogin = false, isSign = false, isTimestamp = false)
-	public void testMongdb() throws CustomException {
+	public void testMongdb() throws KnowledgeException {
 		mongdbService.findAll();
 	}
 	
 	@GetMapping("/testMQ")
 	@Access(isLogin = false, isSign = false, isTimestamp = false)
-	public void testMQ() throws CustomException {
+	public void testMQ() throws KnowledgeException {
 		businessService.testMQ();
 	}
 	
 	@GetMapping("/testRedisssionSync")
 	@Access(isLogin = false, isSign = false, isTimestamp = false)
-	public void testRedisssionSync() throws CustomException {
+	public void testRedisssionSync() throws KnowledgeException {
 		businessService.testRedisssionSync();
 	}
 

@@ -14,7 +14,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.alibaba.fastjson.JSONObject;
 import com.xiehui.common.core.annotation.Access;
-import com.xiehui.common.core.exception.CustomException;
+import com.xiehui.common.core.exception.KnowledgeException;
 import com.xiehui.common.core.exception.ExceptionCode;
 import com.xiehui.common.core.xss.XssHttpServletRequestWrapper;
 import com.xiehui.common.util.EncryptHelper;
@@ -74,14 +74,14 @@ public class AccessAuthentication extends HandlerInterceptorAdapter {
 					try {
 						tempTimestamp = Long.parseLong(timestamp);
 					} catch (NumberFormatException e) {
-						throw new CustomException(ExceptionCode.TIMESTAMP_ERROR, "时间戳格式错误", e);
+						throw new KnowledgeException(ExceptionCode.TIMESTAMP_ERROR, "时间戳格式错误", e);
 					}
 					if (Math.abs(System.currentTimeMillis() / 1000 - tempTimestamp) > INTERVAL) {
-						throw new CustomException(ExceptionCode.TIMESTAMP_ERROR, "时间戳已过期");
+						throw new KnowledgeException(ExceptionCode.TIMESTAMP_ERROR, "时间戳已过期");
 					}
 					this.ApiTimestamp = timestamp;
 				} else {
-					throw new CustomException(ExceptionCode.TIMESTAMP_ERROR, "时间戳不存在");
+					throw new KnowledgeException(ExceptionCode.TIMESTAMP_ERROR, "时间戳不存在");
 				}
 			}
 		}
@@ -96,7 +96,7 @@ public class AccessAuthentication extends HandlerInterceptorAdapter {
 						// 根据token获取customerId;
 						Long cusId = null;
 						if (Objects.isNull(cusId)) {
-							throw new CustomException(ExceptionCode.TOKEN_INVALID, "Token已失效。");
+							throw new KnowledgeException(ExceptionCode.TOKEN_INVALID, "Token已失效。");
 						}
 						this.myCustomerId = cusId;
 						request.setAttribute(loginCustomerId, myCustomerId);
@@ -112,7 +112,7 @@ public class AccessAuthentication extends HandlerInterceptorAdapter {
 						tempSignature = genSignature(request, this.ApiTimestamp, this.loginToken);
 						if (!signature.equalsIgnoreCase(tempSignature)) {
 							log.error(String.format("签名错误(请求签名:%s,计算签名:%s)", signature, tempSignature));
-							throw new CustomException(ExceptionCode.SIGNATURE_ERROR, "签名错误GET");
+							throw new KnowledgeException(ExceptionCode.SIGNATURE_ERROR, "签名错误GET");
 						}
 						return super.preHandle(request, response, handler);
 					}
@@ -121,7 +121,7 @@ public class AccessAuthentication extends HandlerInterceptorAdapter {
 					tempSignature = genPostSignature(request, this.ApiTimestamp, this.loginToken);
 					if (!signature.equalsIgnoreCase(tempSignature)) {
 						log.error(String.format("签名错误(请求签名:%s,计算签名:%s)", signature, tempSignature));
-						throw new CustomException(ExceptionCode.SIGNATURE_ERROR, "签名错误" + request.getMethod());
+						throw new KnowledgeException(ExceptionCode.SIGNATURE_ERROR, "签名错误" + request.getMethod());
 					}
 					String requestLog = String.format("API请求人：%s，请求路径：%s，请求方式：%s，请求参数：%s", this.myCustomerId,
 							request.getRequestURI(), request.getMethod(), WebUtils.getParaStr(request));
@@ -129,7 +129,7 @@ public class AccessAuthentication extends HandlerInterceptorAdapter {
 					// 回调处理函数
 					return super.preHandle(request, response, handler);
 				} else {
-					throw new CustomException(ExceptionCode.SIGNATURE_ERROR, "签名不存在");
+					throw new KnowledgeException(ExceptionCode.SIGNATURE_ERROR, "签名不存在");
 				}
 			}
 		}

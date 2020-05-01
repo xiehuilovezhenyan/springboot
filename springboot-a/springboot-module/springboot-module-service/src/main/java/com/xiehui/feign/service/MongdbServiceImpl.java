@@ -7,7 +7,7 @@ import org.springframework.core.task.TaskExecutor;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
-import com.xiehui.common.core.exception.CustomException;
+import com.xiehui.common.core.exception.KnowledgeException;
 import com.xiehui.feign.api.MongdbService;
 import com.xiehui.mongdb.DCustomer;
 import com.xiehui.mongdb.MCustomermDAO;
@@ -30,7 +30,7 @@ public class MongdbServiceImpl implements MongdbService {
 	private TaskExecutor taskExecutor;
 
 	@Override
-	public void findAll() throws CustomException {
+	public void findAll() throws KnowledgeException {
 		// 查找客户
 		/*
 		 * List<DCustomer> dCustomerList = mCustomerDao.findAll(); log.info("所有客户信息: " +
