@@ -3,8 +3,6 @@ package com.xiehui.rabbit;
 import java.util.UUID;
 
 import org.apache.commons.lang3.RandomUtils;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.rabbit.support.CorrelationData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

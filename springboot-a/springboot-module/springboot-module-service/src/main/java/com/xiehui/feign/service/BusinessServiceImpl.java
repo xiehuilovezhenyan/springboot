@@ -12,8 +12,9 @@ import com.alibaba.fastjson.JSON;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.xiehui.common.core.exception.CustomException;
 import com.xiehui.constant.DataSourceName;
+import com.xiehui.customer.api.AccountService;
 import com.xiehui.customer.api.CustomerService;
-import com.xiehui.customer.api.CustomerService2;
+import com.xiehui.customer.module.CustomerAccount;
 import com.xiehui.customer.module.CustomerData;
 import com.xiehui.data.DCourse;
 import com.xiehui.data.DCourseDAO;
@@ -52,7 +53,9 @@ public class BusinessServiceImpl implements BusinessService {
 	private DelayJobService delayJobService;
 
 	@Autowired
-	private CustomerService2 customerService;
+	private CustomerService customerService;
+	@Autowired
+	private AccountService accountService;
 
 	/**
 	 * 测试一主,两从
@@ -90,6 +93,8 @@ public class BusinessServiceImpl implements BusinessService {
 		// 测试调用feign
 		CustomerData customerData = customerService.getCustomerData(idGenerator.nextId() + "");
 		log.info("CustomerData: " + JSON.toJSONString(customerData));
+		CustomerAccount customerAccount = accountService.getCustomerAccount();
+		log.info("customerAccount: " + JSON.toJSONString(customerAccount));
 
 	}
 

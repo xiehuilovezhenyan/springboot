@@ -21,3 +21,4 @@
 	3: 根目录编译-X clean install
 	4: API模块deploy(${project_loc:/springboot-module-api}      -X clean deploy)
 	5: 如何升级API接口版本 1: 配置${project_loc:springboot-a} 指向根目录  2: 执行versions:set -DnewVersion=1.0.1   然后重复上面步骤
+16: 布隆过滤器Guava

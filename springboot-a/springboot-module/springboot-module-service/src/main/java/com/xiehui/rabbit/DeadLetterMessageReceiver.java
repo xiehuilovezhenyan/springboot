@@ -4,13 +4,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.springframework.amqp.core.Message;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
-
-import org.springframework.amqp.rabbit.annotation.*;
-
-import com.rabbitmq.client.Channel;
 
 import lombok.extern.slf4j.Slf4j;
 
