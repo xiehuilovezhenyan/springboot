@@ -8,4 +8,12 @@
   <artifactId>springboot-customer-app</artifactId>
   <name>springboot-customer-app</name>
   <description>springboot-customer-app</description>
+  
+  <dependencies>
+	<dependency>
+		<groupId>${project.groupId}</groupId>
+		<artifactId>springboot-customer-business-service</artifactId>
+		<version>${project.version}</version>
+	</dependency>
+</dependencies>
 </project>
