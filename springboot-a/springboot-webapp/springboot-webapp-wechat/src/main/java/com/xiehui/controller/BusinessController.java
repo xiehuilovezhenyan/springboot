@@ -20,7 +20,7 @@ public class BusinessController {
 
 	@GetMapping("/test")
 	@Access(isLogin = false, isSign = false, isTimestamp = false)
-	public void test() {
+	public void test() throws KnowledgeException{
 		businessService.queryAllCourse();
 	}
 

@@ -62,7 +62,7 @@ public class BusinessServiceImpl implements BusinessService {
 	 */
 	@Override
 	@DS(DataSourceName.MASTER)
-	public void queryAllCourse() {
+	public void queryAllCourse() throws KnowledgeException {
 		List<DCourse> dCourses = dCourseDAO.listHotCourse();
 		log.info("课程数据...:" + JSON.toJSONString(dCourses));
 
