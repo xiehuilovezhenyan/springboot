@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure;
@@ -14,6 +15,7 @@ import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure;
  * @author xiehui
  *
  */
+@EnableElasticsearchRepositories
 @EnableTransactionManagement  // spring事务管理器
 @EnableDiscoveryClient // springboot alibaba 注册扫描
 @SpringBootApplication(exclude = DruidDataSourceAutoConfigure.class) // springboot 启动类
@@ -22,6 +24,8 @@ import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure;
 public class StartApplication {
 
 	public static void main(String[] args) {
+	    //解决netty冲突
+        System.setProperty("es.set.netty.runtime.available.processors", "false");
 		SpringApplication.run(StartApplication.class, args);
 	}
 

@@ -23,3 +23,8 @@
 	5: 如何升级API接口版本 1: 配置${project_loc:springboot-a} 指向根目录  2: 执行versions:set -DnewVersion=1.0.1   然后重复上面步骤
 16: 布隆过滤器Guava
 17: ES
+	1: 安装es-sql  可以直接使用sql语句进行查询
+		1.1: 注意必须安装对应的版本
+	2: 安装ik分词器
+	3:安装sql页面
+		3.1: 
