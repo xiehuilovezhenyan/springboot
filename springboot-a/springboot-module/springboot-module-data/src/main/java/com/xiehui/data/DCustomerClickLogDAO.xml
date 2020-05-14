@@ -67,5 +67,19 @@
         , #{create.customerId}
 		)
 	</insert>
+	
+	<select id="queryAll" resultType="com.xiehui.data.DCustomerClickLog">
+		select
+		id
+		, ip
+		, plate_from
+		, channel
+		, sub_channel
+		, href_id
+		, created_time
+        , customer_id
+		from t_customer_click_log_202005
+		limit #{startIndex},#{pageSize}
+	</select>
 
 </mapper>

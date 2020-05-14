@@ -26,5 +26,7 @@
 	1: 安装es-sql  可以直接使用sql语句进行查询
 		1.1: 注意必须安装对应的版本
 	2: 安装ik分词器
-	3:安装sql页面
-		3.1: 
+	3: 安装sql页面
+		3.1: 注意修改右上方的地址
+		3.2:注意修改服务端授权配置, 不然会报response...
+	4: 安装es客户端工具: elasticsearch-head  地址:https://www.cnblogs.com/jinzesudawei/p/8661361.html

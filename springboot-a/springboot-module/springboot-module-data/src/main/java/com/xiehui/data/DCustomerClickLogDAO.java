@@ -1,5 +1,7 @@
 package com.xiehui.data;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
@@ -48,5 +50,7 @@ public interface DCustomerClickLogDAO {
      */
     @ShardTable(value = "t_customer_click_log", shard = "customerId")
     boolean existOfPlatFrom(@Param("customerId") Long customerId, @Param("platFrom") String platFrom);
+    
+    public List<DCustomerClickLog> queryAll(@Param("startIndex") Integer startIndex,@Param("pageSize") Integer pageSize);
 
 }

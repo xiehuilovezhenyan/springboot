@@ -17,7 +17,7 @@ public class ESController {
 
     @RequestMapping("/es/{id}")
     @Access(isLogin = false, isSign = false, isTimestamp = false)
-    public UserInfo queryAccountInfo(@PathVariable("id") String id) {
+    public UserInfo queryAccountInfo(@PathVariable("id") Long id) {
         return testService.queryUserInfoById(id);
     }
 
@@ -31,6 +31,12 @@ public class ESController {
     @Access(isLogin = false, isSign = false, isTimestamp = false)
     public void save(@PathVariable("id") String id) {
         testService.save(id);
+    }
+    
+    @RequestMapping("/es/reloadClickLog")
+    @Access(isLogin = false, isSign = false, isTimestamp = false)
+    public void reloadClickLog() {
+        testService.reloadClickLog();
     }
 
 }
