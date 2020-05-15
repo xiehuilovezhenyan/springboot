@@ -29,7 +29,7 @@ public class ESController {
 
     @RequestMapping("/es/save/{id}")
     @Access(isLogin = false, isSign = false, isTimestamp = false)
-    public void save(@PathVariable("id") String id) {
+    public void save(@PathVariable("id") Long id) {
         esService.save(id);
     }
     
@@ -37,6 +37,12 @@ public class ESController {
     @Access(isLogin = false, isSign = false, isTimestamp = false)
     public void reloadClickLog() {
         esService.reloadClickLog();
+    }
+    
+    @RequestMapping("/es/testEsElasticsearchTemplate")
+    @Access(isLogin = false, isSign = false, isTimestamp = false)
+    public void testEsElasticsearchTemplate() {
+        esService.testEsElasticsearchTemplate();
     }
 
 }

@@ -3,11 +3,15 @@ package com.xiehui.es;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.task.TaskExecutor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.query.IndexQuery;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
@@ -42,9 +46,9 @@ public class ElasticsearchServiceImpl {
         return eSUserInfoRepository.findByUserName(userName);
     }
 
-    public void save(String id) {
+    public void save(Long id) {
         UserInfo userInfo = new UserInfo();
-        userInfo.setId(Long.valueOf(id));
+        userInfo.setId(id);
         userInfo.setEmail("123@qq.com");
         userInfo.setUserName("xiehui");
         userInfo.setRemark(userInfo.getRemark() + userInfo.getEmail() + id);
@@ -73,9 +77,9 @@ public class ElasticsearchServiceImpl {
                     for (DCustomerClickLog dCustomerClickLog : dCustomerClickLogs) {
                         ECustomerClickLog eCustomerClickLog = new ECustomerClickLog();
                         BeanUtils.copyProperties(dCustomerClickLog, eCustomerClickLog);
-                        log.info("eCustomerClickLog =>" + JSON.toJSONString(dCustomerClickLog));
+                        log.info("eCustomerClickLog =>" + JSON.toJSONString(eCustomerClickLog));
                         // eCustomerClickLogRepository.save(eCustomerClickLog);
-                        
+
                         IndexQuery indexQuery = new IndexQuery();
                         indexQuery.setId(eCustomerClickLog.getId().toString());
                         indexQuery.setSource(JSON.toJSONString(eCustomerClickLog));
@@ -96,6 +100,20 @@ public class ElasticsearchServiceImpl {
             // 递增开始序号
             startIndex += pageSize;
         }
+    }
+
+    public void testEsElasticsearchTemplate() {
+        // 普通查询
+        SearchQuery searchQuery = new NativeSearchQueryBuilder().withIndices("customerclicklog")
+            .withQuery(QueryBuilders.termQuery("customerId", "307181764220297860")).withPageable(new PageRequest(0, 2))
+            .build();
+        List<ECustomerClickLog> eCustomerClickLogList =
+            esElasticsearchTemplate.queryForList(searchQuery, ECustomerClickLog.class);
+        log.info("eCustomerClickLogList=>" + JSON.toJSONString(eCustomerClickLogList));
+        
+        // 多表关联查询
+        // TODO
+        
     }
 
 }
